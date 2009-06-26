@@ -11,18 +11,23 @@ class TestItController < ApplicationController
   
   def index
     respond_to do |wants|
-      wants.html {
-        @graph = open_flash_chart_object( 600, 300, url_for( :action => 'index', :format => :json ) )
-      }
-      wants.json { 
-        chart = OpenFlashChart.new( "MY TITLE" ) do |c|
-          c << BarGlass.new( :values => (1..10).sort_by{rand} )
-        end
-        render :text => chart, :layout => false
-      }
-    end
+  		wants.html {
+		    @graph = open_flash_chart_object( 500, 200, url_for( :action => 'chart', :format => :json ) )
+		  }
+		wants.json { 
+		    chart = %{&title=Spoon+sales+2009,{font-size: 26px;}&
+		    &x_axis_steps=1&
+		    &y_ticks=5,1,10&
+		    &line=2,#874211&
+		    &values=7,13,49,1,34,37,12,44,17,6,29,14&
+		    &x_labels=Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec&
+		    &y_min=0&
+		    &y_max=90&
+		    }
+		    render :text => chart, :layout => false
+		}
+	end
   end
-
 end
 
 6) Add the following to index.html.erb in RAILS_ROOT/app/views/test_it/:
