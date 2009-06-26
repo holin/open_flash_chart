@@ -44,7 +44,10 @@ module OpenFlashChart
       <<-HTML
       <div id="#{div_name}"></div>
       <script type="text/javascript">
-        swfobject.embedSWF("#{base}#{swf_file_name}", "#{div_name}", "#{width}", "#{height}", "9.0.0", "expressInstall.swf",{"data-file":"#{url}"});
+      var so = new SWFObject("#{base}#{swf_file_name}", "chart", "#{width}", "#{height}", "9", "#FFFFFF");
+      so.addVariable("data", "#{url}");
+      so.addParam("allowScriptAccess", "sameDomain");
+      so.write("#{div_name}");
       </script>
       HTML
     end
